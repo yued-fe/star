@@ -1,0 +1,31 @@
+star {
+  position: relative;
+}
+
+star::after {
+  content: "";
+  width: calc(var(--value) * 26px);
+  height: 26px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-repeat: repeat-x;
+  background-size: 26px;
+  background-image: url("data:image/svg+xml,%3Csvg width='13' height='12' viewBox='0 0 13 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.5 0l1.968 4.004 4.532.58-3.315 3.054.832 4.362L6.5 9.884 2.483 12l.832-4.362L0 4.584l4.532-.58L6.5 0z' fill='%23F8B200'/%3E%3C/svg%3E");
+}
+
+/* 没有评价 */
+star:before {
+  content: "";
+  width: calc(var(--level) * 26px);
+  height: 26px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-repeat: repeat-x;
+  background-size: 26px;
+  background-image: url("data:image/svg+xml,%3Csvg width='13' height='12' viewBox='0 0 13 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.5 0l1.968 4.004 4.532.58-3.315 3.054.832 4.362L6.5 9.884 2.483 12l.832-4.362L0 4.584l4.532-.58L6.5 0z' fill='%23D8D8D8'/%3E%3C/svg%3E");
+}
