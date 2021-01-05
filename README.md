@@ -7,11 +7,11 @@ pc端鼠标点击进行评分，移动端手指移动评分
 像上面这种评分是一种很常见的需求，借助js实现的很简单，但是css的话就会有一点点的难度
 
 ### 背景 
-那天[张老师](https://www.zhangxinxu.com/wordpress/)在code review 我代码，看到评星实现的时候，提了一嘴 借助`type="range"`应该可以实现，当时的我想破脑袋也想不出来，脑子是蒙的。后来[同事](https://github.com/XboxYan)无意间看到了我的博客，开始了一段新的对话
+那天[张老师](https://www.zhangxinxu.com/wordpress/)在`code review` 我代码，看到评星实现的时候，提了一嘴 借助`type="range"`应该可以实现，当时的我想破脑袋也想不出来，脑子是蒙的。后来[同事](https://github.com/XboxYan)无意间看到了我的博客，开始了一段新的对话
 
 <img src="./1.png">
 
-后来我和他各种忙各自的去了，再后来纯css实现了
+后来我和他各种忙各自的去了，我很开心的和他说我把代码进行了优化，效果很不错，而他却用纯`css`实现了，魔高一尺道高一丈。
 
 <img src="./2.png">
 
@@ -19,11 +19,11 @@ pc端鼠标点击进行评分，移动端手指移动评分
 
 [纯css实现评分](https://codepen.io/qingchuang/pen/jOMmQab)
 
-同事他说之前想自定义input range的样式研究过，没想到这次派上用场了。真的太厉害了，打开了我的眼界
+同事他说之前想自定义`input range`的样式研究过，没想到这次派上用场了。真的太厉害了，打开了我的眼界
 
 
 ## 如何用css实现评分
-在DOM结构里面有一种特殊的DOM叫 shaow DOM，
+在`DOM`结构里面有一种特殊的`DOM`叫 `shaow DOM`
 ### input type="range" 只是一个简单的元素吗？
 
 <img src="./3.png">
@@ -32,10 +32,10 @@ pc端鼠标点击进行评分，移动端手指移动评分
 
 <img src="./4.png">
 
-我们做的一个小小的设置就是把 shaow DOM 显示出来，心细的小伙伴发现`input type="range"`标签下面有一个 `shadow-root`  节点。节点里面就有很多的dom节点，证实了`input type="range"`并不是一个标签，而是一个组件，只是组件内的东西，不允许我们改变，我们不容易看见。我们给他取一个名字，影子节点
+我们做的一个小小的设置就是把 `shaow DOM` 显示出来，心细的小伙伴发现`input type="range"`标签下面有一个 `shadow-root`  节点。节点里面就有很多的`DOM`节点，证实了`input type="range"`并不是一个标签，而是一个组件，只是组件内的东西，不允许我们改变，我们不容易看见。我们给他取一个名字，影子节点
 
 ### 如何自定义`input type="range"`的样式
-像这种元素我们可以称之为组件，Web components 的一个重要属性是封装——可以将标记结构、样式和行为隐藏起来，并与页面上的其他代码相隔离，保证不同的部分不会混在一起，可使代码更加干净、整洁。其中，Shadow DOM 接口是关键所在，它可以将一个隐藏的、独立的 DOM 附加到一个元素上。`input type="range"` 就是一个 web components 。
+像这种元素我们可以称之为组件，`Web components` 的一个重要属性是封装——可以将标记结构、样式和行为隐藏起来，并与页面上的其他代码相隔离，保证不同的部分不会混在一起，可使代码更加干净、整洁。其中，`Shadow DOM` 接口是关键所在，它可以将一个隐藏的、独立的 `DOM` 附加到一个元素上。`input type="range"` 就是一个` web components` 。
 [ shadow DOM ](https://developer.mozilla.org/zh-CN/docs/Web/Web_Components/Using_shadow_DOM)里面的内容不被我们所见
 
 有了上面的知识点，接下来我们就可以研究如何去自定义他的样式。通过浏览器调试工具我们不难发现暴露了一个伪类供我们修改。是不是我们对他的伪类进行修改就可以实现自定义样式呢？
@@ -71,7 +71,7 @@ input[type="range"]{
   }
 ```
 
-纯css实现了，不需要js，我的同事真厉害。只要兼容 `input type="range"` 这个问题就不大了。
+用纯`css`实现了，不需要`js`，我的同事真厉害。只要兼容 `input type="range"` 这个问题就不大了。
 
 ### 其他的浏览器兼容性怎么样呢？
 火狐浏览器：通过控制台不难发现，结构是一样的，只是暴露的伪类不一样，稍微修改就好了
