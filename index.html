@@ -10,17 +10,30 @@
 </head>
 
 <body>
-  <div>hjahsjahs</div>
-  <star></star>
+  <div>在元素上面设置最大评星数=>level:8,设置初始值=>value:3.5,表单提交=>name:star</div>
+  <star level="8" value="3.5" name="star"></star>
+  <div>通过构造函数设置最大评星数=>level:8,表单提交=>name:star</div>
+  <star class="star1"></star>
+  <div>设置星星不可评分事件</div>
+  <star level="7" id="star2" value="5" readonly></star>
 </body>
 <script src="./index.js"></script>
 <script>
-  var star = new Star({
-    level: 7,
-    name: 'star',
-    rate: "rate"
-  })
+  var star = new Star()
   star.starRender()
+
+  var star1 = new Star({
+    level: 7,
+    // value: 3,
+    name: 'star1',
+    el: ".star1"
+  })
+  star1.starRender()
+
+  var star2 = new Star({
+    el: "#star2"
+  })
+  star2.starRender()
 </script>
 
 </html>

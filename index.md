@@ -16,13 +16,13 @@
 1. 每个星星都是可以点击的，星星数量不一定 => 借助 `css` 变量，实现一个标签包裹多个星星
 
 ```
- <star style="--level:6"></star>
+ <star level="8"></star>
 ```
 
 2. 鼠标移动or点击的时候，当前星星高亮，其余不变 => 借助另一个 `css` 变量，只展示高亮星星
 
 ```
-e.target.style.setProperty('--value', starValue)
+e.target.style.setProperty('--value', value)
 ```
 
 3. 鼠标移动上去的高亮到当前的星星 => 
@@ -41,7 +41,7 @@ e.target.style.setProperty('--value', starValue)
 
 ```
   this.params.eleBox.addEventListener('mouseleave',function(e){
-    _that.params.eleBox.style.setProperty('--value', _that.params.starValue)
+    _that.params.eleBox.style.setProperty('--value', _that.params.value)
   })
 ```
 
@@ -49,8 +49,8 @@ e.target.style.setProperty('--value', starValue)
 
 ```
   this.params.eleBox.addEventListener('click',function(e){
-    _that.params.starValue = _that.starLight(e.offsetX)
-    _that.params.eleInput.value = _that.params.starValue;
+    _that.params.value = _that.starLight(e.offsetX)
+    _that.params.eleInput.value = _that.params.value;
     _that.params.eleInput.dispatchEvent(new CustomEvent('change'));
   })
 ```
@@ -60,18 +60,18 @@ e.target.style.setProperty('--value', starValue)
 ```
   starLight(step) {
     step = step / 26
-    var starValue = Math.trunc(step)
+    var value = Math.trunc(step)
     
     if (step < 0) {
-      starValue = 0
+      value = 0
     } else if (step - Math.trunc(step) < 0.5) {
       // 高亮一半个星星
-      starValue += 0.5
+      value += 0.5
     } else {
-      starValue += 1
+      value += 1
     }
-    this.params.eleBox.style.setProperty('--value', starValue)
-    return starValue
+    this.params.eleBox.style.setProperty('--value', value)
+    return value
   }
 ```
 
@@ -82,11 +82,21 @@ e.target.style.setProperty('--value', starValue)
 查看demo的时候，你会发现代码是进行了简单的封装。在new Star类的时候，只需要传入几个参数就可以满足你大部分的时候的需求
 
 ```
-  level:你要展示几个星星，可以在style上面定义，也可以在new 的时候传入
-  name:如果你使用form表单提交时候的字段
-  rate:自定义样式,把你想要的样式通过一个类名传递进去（背景图的形式
-  const star = new Star({el:'.star',level:7,name:'star',rate:"rate"})
-  star.starRender()
+  el:指定一个容器
+
+  level:你要展示几个星星，可以在元素或者也可以在new 的时候传入
+
+  name:如果你使用form表单提交时候的字段，可以在元素或者也可以在new 的时候传入
+
+  className:自定义样式,把你想要的样式通过一个类名传递进去（背景图的形式
+
+  var star1 = new Star({
+    level: 7,
+    value: 3,
+    name: 'star1',
+    el: ".star1"
+  })
+  star1.starRender()
 ```
 
 ## 使用纯css的高技巧实现

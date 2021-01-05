@@ -1,8 +1,12 @@
-star {
+star div {
+  width: calc(var(--level) * 26px);
+  overflow: hidden;
+  height: 26px;
   position: relative;
+  display: inline-block;
 }
 
-star::after {
+star div::after {
   content: "";
   width: calc(var(--value) * 26px);
   height: 26px;
@@ -17,7 +21,7 @@ star::after {
 }
 
 /* 没有评价 */
-star:before {
+star div::before {
   content: "";
   width: calc(var(--level) * 26px);
   height: 26px;
