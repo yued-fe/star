@@ -5,59 +5,91 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>五角星</title>
+  <title>range 实现评分组件</title>
   <style>
-    input[type="range"] {
-      -webkit-appearance: none;
-      width: 10em;
-      margin: 0;
-      outline: 0;
-      cursor: pointer;
-    }
+[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+    margin: 0;
+    outline: 0;
+    cursor: pointer;
+    width:calc(var(--number,5) * 2em);
+    --mask-url: url("data:image/svg+xml,%3Csvg width='12' height='11' viewBox='0 0 12 11' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 0l1.693 3.67 4.013.476L8.74 6.89l.788 3.964L6 8.88l-3.527 1.974.788-3.964L.294 4.146l4.013-.476L6 0z'/%3E%3C/svg%3E");
+    --mask: var(--mask-url) repeat-x left / 2em 100%;
+  }
+  
+  [type="range"]::-webkit-slider-runnable-track {
+    background: #f59b00;
+    height: 2em;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+}
 
-    input[type="range"i]::-webkit-slider-runnable-track {
-      background: coral;
-      height: 2em;
-      -webkit-mask: url("data:image/svg+xml,%3Csvg width='12' height='11' viewBox='0 0 12 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 0l1.693 3.67 4.013.476L8.74 6.89l.788 3.964L6 8.88l-3.527 1.974.788-3.964L.294 4.146l4.013-.476L6 0z' fill='%23F67600'/%3E%3C/svg%3E");
-      -webkit-mask-size: 2em;
-      -webkit-mask-repeat: repeat-x;
-    }
+[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 0;
+    height: 100%;
+    box-shadow: 999em 0 0 999em #ededef;
+}
 
-    input[type="range"i]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 0;
-      height: 100%;
-      box-shadow: 999em 0 0 999em #E8EAED;
-    }
+[type="range"]:focus::-webkit-slider-thumb {
+    box-shadow: 999em 0 0 999em #ededef;
+    background: #f59b00;
+}
+/* 只展示 */
+[type="range"][readonly]{
+    pointer-events:none;
+}
+/* 兼容火狐浏览器 */
+[type=range],
+_::-moz-range-track {
+    appearance: auto;
+}
+[type=range],
+_::-moz-range-track {
+    appearance: none;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+    height: 2em;
+}
 
-    /* 兼容火狐浏览器 */
-    input[type=range] {
-      -webkit-mask: url("data:image/svg+xml,%3Csvg width='12' height='11' viewBox='0 0 12 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 0l1.693 3.67 4.013.476L8.74 6.89l.788 3.964L6 8.88l-3.527 1.974.788-3.964L.294 4.146l4.013-.476L6 0z' fill='%23F67600'/%3E%3C/svg%3E");
-      -webkit-mask-size: 2em;
-      -webkit-mask-repeat: repeat-x;
-      height: 2em;
-      cursor: pointer;
-    }
+[type="range"]::-moz-range-track {
+    background:#ededef;
+    height: inherit;
+}
 
-    input[type=range]::-moz-range-track {
-      background: #E8EAED;
-      height: inherit;
-    }
+[type="range"]::-moz-range-progress {
+    background: #f59b00;
+    height: inherit;
+}
 
-    input[type=range]::-moz-range-progress {
-      background: coral;
-      height: inherit;
-    }
-
-    input[type=range]::-moz-range-thumb {
-      width: 0;
-      opacity: 0;
-    }
+[type="range"]::-moz-range-thumb {
+    width: 0;
+    opacity: 0;
+}
   </style>
 </head>
 
 <body>
-  <input type="range" name="star" min="0" max="5" step="0.5" value="0">
+  <p>评星的本质是在一个范围内进行选择，因此使用range范围也可以实现，我们只需要添加一个  即可实现</p>
+  <input type="range"  max="5"  step="0.5" value="3">
+  <pre>&lt;input type="range"    max="5" step="0.5" value="0"&gt;</pre>
+  <p>
+   评星默认是五个，如果你需要定义评星的数量就传入一个自定义属性和值 style="--number: 10;"
+  </p>
+  <input type="range"   max="10" step=".5"  value="5" style="--number: 10;">
+  <pre>input type="range"   max="10" step="0.5" value="1.5" style="--number: 10;"&gt;</pre>
+  <p>disabled禁用测试</p>
+  <input type="range"  max="5" disabled step="0.5" value="3">
+  <pre>&lt;input type="range"  disabled  max="5" step="0.5" value="0"&gt;</pre>
+  <p>readonly禁用测试</p>
+  <input type="range"  max="5" readonly step="0.5" value="3">
+  <pre>&lt;input type="range"   readonly max="5" step="0.5" value="0"&gt;</pre>
+  <p>温馨提示:</p>
+  <ul>
+      <li>1. max step value三者要成倍数的关系（ 若有 --number，也要算在里面 ），否则可能会导致星星展示不全，比如max=100,--number:10,那么step和value就要是5的倍数</li>
+      <li>2. min只能设置0或者不设置，若要设置初始值，请设置value，他的值要和max成倍数关系</li>
+  </ul>
 </body>
 
 </html>
